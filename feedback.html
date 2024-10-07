@@ -1,0 +1,181 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Student Response - Cracking Job Satisfaction</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;700&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #fff;
+        }
+        .container {
+            max-width: 1200px;
+            margin-top: 50px;
+        }
+        .comment-panel {
+            background-color: #fff;
+            border-radius: 10px;
+            padding: 20px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            height: 530px;
+            overflow-y: auto;
+        }
+        .window-header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            background-color: #e0e0e0;
+            padding: 5px 10px;
+            border-radius: 10px 10px 0 0;
+            margin-bottom: 10px;
+        }
+        .window-controls {
+            display: flex;
+        }
+        .window-control {
+            width: 12px;
+            height: 12px;
+            border-radius: 50%;
+            margin-right: 8px;
+        }
+        .close { background-color: #ff5f56; }
+        .minimize { background-color: #ffbd2e; }
+        .maximize { background-color: #27c93f; }
+        .notepad-title {
+            font-size: 0.9em;
+            color: #333;
+        }
+
+        #current-datetime {
+            font-size: 0.8em;
+            color: #666;
+            margin-bottom: 10px;
+            text-align: center;
+        }
+
+        .comment-list {
+            list-style-type: none;
+            padding: 0;
+        }
+
+        .comment-list li {
+            margin-bottom: 10px;
+            padding: 10px;
+            background-color: #fff;
+            border-radius: 5px;
+        }
+        iframe {
+            width: 100%;
+            height: 530px;
+            border: none;
+            border-radius: 10px;
+        }
+
+        .feedback-instruction {
+            text-align: left;
+            margin-bottom: 20px;
+            font-style: italic;
+            color: #666;
+        }
+
+        #nextButton {
+        width: 200px;
+        margin-bottom: 20px;  /* Added margin-bottom */
+    }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="row">
+            <div class="col-md-6">
+                <p class="feedback-instruction">Spend 20-30 minutes to discuss within your team and suggest solutions to the problems mentioned above.</p>
+                <iframe id="tallyFrame" data-tally-src="https://tally.so/embed/nrdKK5?alignLeft=1&hideTitle=1&transparentBackground=1&dynamicHeight=1" loading="lazy" width="100%" height="500" frameborder="0" marginheight="0" marginwidth="0" title="Test Form"></iframe>
+                <script>
+                    var d=document,w="https://tally.so/widgets/embed.js",v=function(){"undefined"!=typeof Tally?Tally.loadEmbeds():d.querySelectorAll("iframe[data-tally-src]:not([src])").forEach((function(e){e.src=e.dataset.tallySrc}))};if("undefined"!=typeof Tally)v();else if(d.querySelector('script[src="'+w+'"]')==null){var s=d.createElement("script");s.src=w,s.onload=v,s.onerror=v,d.body.appendChild(s);}
+
+                    // Listen for messages from the iframe
+                    window.addEventListener('message', function(event) {
+                        // Check if the message is from Tally
+                        if (event.data.type === 'tally-form-submit') {
+                            // Refresh the entire page
+                            window.location.reload();
+                        }
+                    });
+                </script>
+            </div>
+            <div class="col-md-6">
+                <div class="comment-panel">
+                    <div class="window-header">
+                        <div class="window-controls">
+                            <div class="window-control close"></div>
+                            <div class="window-control minimize"></div>
+                            <div class="window-control maximize"></div>
+                        </div>
+                        <div class="notepad-title">clues.txt</div>
+                    </div>
+                    <div id="current-datetime"></div>
+                    <ul class="comment-list" id="commentList">
+                        <li>• <strong>Increased use of remote work:</strong> <i>You know, ever since we started working from home full-time, I've been feeling a bit disconnected from the team. It's like we're all islands now.</i></li>
+                        <li>• <strong>Workload imbalance:</strong> <i>I'm drowning in work here! It feels like every time I finish a task, three more pop up. I'm not sure how much longer I can keep up this pace.</i></li>
+                        <li>• <strong>Lack of recognition:</strong> <i>I put in so many extra hours last month to finish that big project, but it's like no one even noticed. A simple 'good job' would go a long way, you know?</i></li>
+                        <li>• <strong>Shift towards micromanagement:</strong> <i>The new management style is... intense. I feel like I'm being watched all the time. It's hard to be creative when you're constantly looking over your shoulder.</i></li>
+                        <li>• <strong>Increased employee turnover:</strong> <i>I've noticed a lot of familiar faces leaving lately, especially those who've been here for a few years. It's making me wonder if I should start looking elsewhere too.</i></li>
+                    </ul>
+                </div>
+                <!-- button align right-->
+                <button id="nextButton" class="btn btn-dark btn-md rounded-pill mt-3" style="width: 50%; ">Next Page</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal for Access Code -->
+    <div class="modal fade" id="accessCodeModal" tabindex="-1" aria-labelledby="accessCodeModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="accessCodeModalLabel">Access Code Required</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <input type="text" class="form-control" id="accessCodeInput" placeholder="Enter Access Code">
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                    <button type="button" class="btn btn-primary" id="submitAccessCode">Submit</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script>
+        function updateDateTime() {
+            const now = new Date();
+            const options = { day: 'numeric', month: 'long', year: 'numeric', hour: '2-digit', minute: '2-digit' };
+            const formattedDate = now.toLocaleDateString('en-US', options);
+            document.getElementById('current-datetime').textContent = formattedDate;
+        }
+
+        updateDateTime();
+
+        const accessCodeModal = new bootstrap.Modal(document.getElementById('accessCodeModal'));
+
+        document.getElementById('nextButton').addEventListener('click', function() {
+            accessCodeModal.show();
+        });
+
+        document.getElementById('submitAccessCode').addEventListener('click', function() {
+            const accessCode = document.getElementById('accessCodeInput').value;
+            if (accessCode === '678v8D') {
+                window.location.href = 'theory.html';
+            } else {
+                alert('Incorrect access code. Please wait for the instructor!');
+                accessCodeModal.hide();
+            }
+        });
+    </script>
+</body>
+</html>
